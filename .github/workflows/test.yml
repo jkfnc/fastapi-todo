@@ -34,7 +34,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    - name: Run tests with pytest
+    - name: Run backend tests with pytest
       run: |
         pytest tests/ -v --tb=short
     
@@ -42,3 +42,53 @@ jobs:
       run: |
         pip install black
         black --check app/ tests/ main.py || true
+
+  frontend-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check for JavaScript syntax errors
+      run: |
+        # Basic syntax check for JavaScript files
+        for file in static/js/*.js; do
+          if [ -f "$file" ]; then
+            node -c "$file" || exit 1
+          fi
+        done
+    
+    - name: Check for CSS syntax
+      run: |
+        # Basic check that CSS files exist and are not empty
+        for file in static/css/*.css; do
+          if [ -f "$file" ]; then
+            if [ ! -s "$file" ]; then
+              echo "Error: $file is empty"
+              exit 1
+            fi
+          fi
+        done
+    
+    - name: Validate HTML
+      run: |
+        # Check that HTML files are well-formed
+        pip install html5validator
+        html5validator --root templates/ --also-check-css --also-check-svg || true
+    
+    - name: Check static assets
+      run: |
+        # Ensure all referenced static files exist
+        echo "Checking static file references..."
+        
+        # Check that directories exist
+        [ -d "static/css" ] || (echo "static/css directory missing" && exit 1)
+        [ -d "static/js" ] || (echo "static/js directory missing" && exit 1)
+        [ -d "templates" ] || (echo "templates directory missing" && exit 1)
+        
+        # Check that main files exist
+        [ -f "static/css/style.css" ] || (echo "style.css missing" && exit 1)
+        [ -f "static/js/app.js" ] || (echo "app.js missing" && exit 1)
+        [ -f "templates/index.html" ] || (echo "index.html missing" && exit 1)
+        
+        echo "All static assets found!"

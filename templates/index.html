@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Todo List</h1>
+            <p class="subtitle">Stay organized and productive</p>
+        </header>
+
+        <div class="add-todo-section">
+            <form id="add-todo-form">
+                <input 
+                    type="text" 
+                    id="todo-title" 
+                    placeholder="What needs to be done?" 
+                    required
+                >
+                <textarea 
+                    id="todo-description" 
+                    placeholder="Add a description (optional)"
+                    rows="2"
+                ></textarea>
+                <button type="submit">Add Todo</button>
+            </form>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">Loading...</div>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <ul id="todo-list" class="todo-list">
+            <!-- Todos will be loaded here dynamically -->
+        </ul>
+
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <p>No todos yet. Add one above!</p>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

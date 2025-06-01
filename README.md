@@ -1,13 +1,20 @@
 # FastAPI Todo Application
 
-A simple REST API for managing todos built with FastAPI and SQLAlchemy.
+A full-stack todo application with a REST API backend and interactive web frontend, built with FastAPI and SQLAlchemy.
 
 ## Features
 
-- Create, read, update, and delete todos
-- SQLite database for data persistence
-- Automatic API documentation with Swagger UI
-- CORS enabled for frontend integration
+- **Backend**: RESTful API with FastAPI
+  - Create, read, update, and delete todos
+  - SQLite database for data persistence
+  - Automatic API documentation with Swagger UI
+  - CORS enabled for frontend integration
+  
+- **Frontend**: Modern web interface
+  - Responsive design that works on desktop and mobile
+  - Real-time todo management without page refresh
+  - Filter todos by status (All, Active, Completed)
+  - Clean, intuitive user interface
 
 ## Installation
 
@@ -33,16 +40,18 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
+The application will be available at `http://localhost:8000`
 
-## API Documentation
+## Accessing the Application
 
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+- **Web Frontend**: `http://localhost:8000`
+- **API Documentation**: 
+  - Swagger UI: `http://localhost:8000/docs`
+  - ReDoc: `http://localhost:8000/redoc`
 
 ## API Endpoints
 
-- `GET /` - Welcome message
+- `GET /` - Serves the web frontend
 - `GET /api/todos` - Get all todos
 - `GET /api/todos/{todo_id}` - Get a specific todo
 - `POST /api/todos` - Create a new todo
@@ -62,7 +71,24 @@ fastapi-todo/
 │   │   └── todos.py        # API routes
 │   └── schemas/
 │       └── todo.py         # Pydantic schemas
+├── static/
+│   ├── css/
+│   │   └── style.css       # Frontend styles
+│   └── js/
+│       └── app.js          # Frontend JavaScript
+├── templates/
+│   └── index.html          # Frontend HTML
+├── tests/
+│   ├── test_todos.py       # API tests
+│   ├── test_frontend.py    # Frontend integration tests
+│   └── test_frontend_js.py # JavaScript functionality tests
 ├── main.py                 # Application entry point
 ├── requirements.txt        # Project dependencies
 └── README.md              # This file
+```
+
+## Running Tests
+
+```bash
+pytest tests/ -v
 ```
