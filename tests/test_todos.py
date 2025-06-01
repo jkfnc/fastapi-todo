@@ -1,5 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
+from datetime import date
 
 def test_read_root(client: TestClient):
     response = client.get("/")
@@ -20,6 +21,8 @@ def test_create_todo(client: TestClient):
     assert data["completed"] == todo_data["completed"]
     assert "id" in data
     assert "created_at" in data
+    assert "date" in data
+    assert data["date"] == str(date.today())
 
 def test_get_todos(client: TestClient):
     # Create a todo first
@@ -32,6 +35,8 @@ def test_get_todos(client: TestClient):
     assert isinstance(todos, list)
     assert len(todos) == 1
     assert todos[0]["title"] == "Test Todo"
+    assert "date" in todos[0]
+    assert todos[0]["date"] == str(date.today())
 
 def test_get_todo_by_id(client: TestClient):
     # Create a todo
@@ -45,6 +50,8 @@ def test_get_todo_by_id(client: TestClient):
     data = response.json()
     assert data["id"] == todo_id
     assert data["title"] == "Test Todo"
+    assert "date" in data
+    assert data["date"] == str(date.today())
 
 def test_get_todo_not_found(client: TestClient):
     response = client.get("/api/todos/9999")
