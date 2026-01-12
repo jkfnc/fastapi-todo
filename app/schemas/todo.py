@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional
 
 class TodoBase(BaseModel):
@@ -21,3 +21,4 @@ class Todo(TodoBase):
     id: int
     created_at: datetime
     updated_at: Optional[datetime]
+    date: date
